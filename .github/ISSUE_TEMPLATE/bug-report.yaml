@@ -3,10 +3,6 @@ description: Create a bug report!
 title: "[Bug]: "
 labels: ["bug"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        *Chat on [Discord](https://discord.gg/6mcdWWBkrr) for a quicker response.*
   - type: textarea
     id: description
     attributes:
