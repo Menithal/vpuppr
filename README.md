@@ -4,7 +4,7 @@ NOTE THIS NOT WORK YET, development in progress.
 
 VTuber software made with Godot.
 
-This is a recovery effort to get vpuppr to run on godot 4.5 using latest gdext conventions and possibly take over maintenance, used as a learning opportunity to  learn the intricities of godot, and godot-next while trying to make something the maintainer wants to also use.
+This is a recovery effort to get vpuppr to run on godot 4.5 using latest gdext conventions and possibly take over maintenance, used as a learning opportunity to  learn the intricities of godot, and godot-next AND rust (no experience in any of them) while trying to make something the maintainer wants to also use.
 
 
 ## Status
