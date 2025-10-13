@@ -1,7 +1,7 @@
 use std::{fmt::Display, str::FromStr};
 
 use argh::FromArgs;
-use godot::prelude::{Dictionary, GodotString};
+use godot::builtin::{Dictionary, GString};
 
 const CUSTOM_PREFIX: &str = "custom:";
 
@@ -100,13 +100,13 @@ impl GodotCommand for LaunchCommand {
     fn populate_dict(&self, dict: &mut Dictionary) {
         dict.insert("command", "launch");
 
-        dict.insert("name", GodotString::from(&self.runner_data));
+        dict.insert("name", GString::from(&self.runner_data));
         dict.insert(
             "tracker",
             if let Some(tracker) = &self.tracker {
-                GodotString::from(tracker)
+                GString::from(tracker.as_ref())
             } else {
-                GodotString::new()
+                GString::new()
             },
         );
     }
@@ -147,6 +147,7 @@ impl FromStr for Tracker {
     }
 }
 
+
 impl AsRef<str> for Tracker {
     fn as_ref(&self) -> &str {
         match self {
@@ -182,29 +183,29 @@ impl GodotCommand for WithModelCommand {
     fn populate_dict(&self, dict: &mut Dictionary) {
         dict.insert("command", "with_model");
 
-        dict.insert("model_path", GodotString::from(&self.model_path));
+        dict.insert("model_path", GString::from(&self.model_path));
         dict.insert(
             "model_type",
-            if let Some(v) = &self.model_type {
-                GodotString::from(v)
+            if let Some(model_type) = &self.model_type {
+                GString::from(model_type.as_ref())
             } else {
-                GodotString::new()
+                GString::new()
             },
         );
         dict.insert(
             "runner_path",
             if let Some(v) = &self.runner_path {
-                GodotString::from(v)
+                GString::from(v)
             } else {
-                GodotString::new()
+                GString::new()
             },
         );
         dict.insert(
             "gui_path",
             if let Some(v) = &self.gui_path {
-                GodotString::from(v)
+                GString::from(v)
             } else {
-                GodotString::new()
+                GString::new()
             },
         );
     }

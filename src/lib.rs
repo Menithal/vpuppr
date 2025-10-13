@@ -5,9 +5,11 @@ mod logger;
 // mod puppets;
 
 use godot::{
-    engine::{global::Error, Os},
+    global::Error,
     prelude::*,
+    classes::Os
 };
+
 use log::{error, LevelFilter};
 
 pub use logger::Logger;
@@ -17,7 +19,7 @@ pub use logger::Logger;
 struct LibVpuppr;
 
 #[godot_api]
-impl RefCountedVirtual for LibVpuppr {
+impl IRefCounted for LibVpuppr {
     fn init(_base: godot::obj::Base<Self::Base>) -> Self {
         Self
     }

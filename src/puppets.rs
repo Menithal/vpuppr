@@ -5,7 +5,7 @@ pub mod vrm_puppet;
 use std::fmt::Display;
 
 use godot::{
-    engine::{MeshInstance3D, Skeleton3D},
+    classes::{MeshInstance3D, Skeleton3D},
     prelude::*,
 };
 

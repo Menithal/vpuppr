@@ -4,7 +4,7 @@ use std::{
 };
 
 use godot::{
-    engine::{
+    classes::{
         animation::TrackType, global::Error, AnimationPlayer, ArrayMesh, MeshInstance3D, Skeleton3D,
     },
     prelude::*,
@@ -75,8 +75,8 @@ impl Default for VrmFeatures {
 #[derive(Debug, GodotClass)]
 #[class(base = Node3D)]
 // Puppet3d
-#[property(name = head_bone, type = GodotString, get = get_head_bone, set = set_head_bone)]
-#[property(name = head_bone_id, type = GodotString, get = get_head_bone_id, set = set_head_bone_id)]
+#[property(name = head_bone, type = GString, get = get_head_bone, set = set_head_bone)]
+#[property(name = head_bone_id, type = GString, get = get_head_bone_id, set = set_head_bone_id)]
 #[property(
     name = additional_movement_bones,
     type = Array<i32>,
@@ -427,12 +427,12 @@ impl VrmPuppet {
     }
 
     #[func]
-    fn get_head_bone(&self) -> GodotString {
+    fn get_head_bone(&self) -> GString {
         self.puppet3d.head_bone.clone().into()
     }
 
     #[func]
-    fn set_head_bone(&mut self, head_bone: GodotString) {
+    fn set_head_bone(&mut self, head_bone: GString) {
         self.puppet3d.head_bone = head_bone.into();
     }
 

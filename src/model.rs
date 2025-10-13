@@ -8,7 +8,7 @@ use std::{
 
 use chrono::{serde::ts_seconds, DateTime, Utc};
 use godot::{
-    engine::{global::Error, ProjectSettings},
+    classes::{global::Error, ProjectSettings},
     prelude::*,
 };
 use log::{debug, error, info};
@@ -58,14 +58,14 @@ impl std::ops::Deref for GodotPath {
     }
 }
 
-impl From<GodotString> for GodotPath {
-    fn from(value: GodotString) -> Self {
+impl From<GString> for GodotPath {
+    fn from(value: GString) -> Self {
         Self(value.to_string())
     }
 }
 
-impl Into<GodotString> for GodotPath {
-    fn into(self) -> GodotString {
+impl Into<GString> for GodotPath {
+    fn into(self) -> GString {
         self.0.into()
     }
 }
@@ -100,7 +100,7 @@ pub struct Metadata {
 }
 
 #[godot_api]
-impl RefCountedVirtual for Metadata {
+impl IRefCounted for Metadata {
     fn init(_base: godot::obj::Base<Self::Base>) -> Self {
         Self::default()
     }
@@ -154,7 +154,7 @@ impl Metadata {
     }
 
     #[func]
-    pub fn scan(&mut self, path: GodotString) -> Error {
+    pub fn scan(&mut self, path: GString) -> Error {
         debug!("Scanning for data");
 
         let path = ProjectSettings::singleton()
@@ -262,14 +262,14 @@ impl SaveFile for Metadata {
 
 /// Data for a runner.
 #[derive(Debug, Default, GodotClass, Serialize, Deserialize)]
-#[property(name = name, type = GodotString, get = get_name, set = set_name)]
-#[property(name = puppet_class, type = GodotString, get = get_puppet_class, set = set_puppet_class)]
-#[property(name = runner_path, type = GodotString, get = get_runner_path, set = set_runner_path)]
-#[property(name = gui_path, type = GodotString, get = get_gui_path, set = set_gui_path)]
-#[property(name = model_path, type = GodotString, get = get_model_path, set = set_model_path)]
-#[property(name = preview_path, type = GodotString, get = get_preview_path, set = set_preview_path)]
-#[property(name = is_favorite, type = GodotString, get = get_is_favorite, set = set_is_favorite)]
-#[property(name = last_used, type = GodotString, get = get_last_used_int)]
+#[property(name = name, type = GString, get = get_name, set = set_name)]
+#[property(name = puppet_class, type = GString, get = get_puppet_class, set = set_puppet_class)]
+#[property(name = runner_path, type = GString, get = get_runner_path, set = set_runner_path)]
+#[property(name = gui_path, type = GString, get = get_gui_path, set = set_gui_path)]
+#[property(name = model_path, type = GString, get = get_model_path, set = set_model_path)]
+#[property(name = preview_path, type = GString, get = get_preview_path, set = set_preview_path)]
+#[property(name = is_favorite, type = GString, get = get_is_favorite, set = set_is_favorite)]
+#[property(name = last_used, type = GString, get = get_last_used_int)]
 pub struct RunnerData {
     /// The name of the Runner Data. Should generally be set to the name of the model.
     name: String,
@@ -291,7 +291,7 @@ pub struct RunnerData {
 }
 
 #[godot_api]
-impl RefCountedVirtual for RunnerData {
+impl IRefCounted for RunnerData {
     fn init(_base: godot::obj::Base<Self::Base>) -> Self {
         Self::new()
     }
@@ -304,7 +304,7 @@ impl RunnerData {
     /// # Returns
     /// The `RunnerData` if successful or an empty `Variant` otherwise.
     #[func(rename = try_load)]
-    fn try_load_bound(path: GodotString) -> Variant {
+    fn try_load_bound(path: GString) -> Variant {
         let path: PathBuf = ProjectSettings::singleton()
             .globalize_path(path)
             .to_string()
@@ -346,62 +346,62 @@ impl RunnerData {
     }
 
     #[func]
-    fn get_name(&self) -> GodotString {
+    fn get_name(&self) -> GString {
         self.name.clone().into()
     }
 
     #[func]
-    fn set_name(&mut self, name: GodotString) {
+    fn set_name(&mut self, name: GString) {
         self.name = name.to_string()
     }
 
     #[func]
-    fn get_puppet_class(&self) -> GodotString {
+    fn get_puppet_class(&self) -> GString {
         self.puppet_class.clone().into()
     }
 
     #[func]
-    fn set_puppet_class(&mut self, puppet_class: GodotString) {
+    fn set_puppet_class(&mut self, puppet_class: GString) {
         self.puppet_class = puppet_class.into();
     }
 
     #[func]
-    fn get_runner_path(&self) -> GodotString {
+    fn get_runner_path(&self) -> GString {
         self.runner_path.clone().into()
     }
 
     #[func]
-    fn set_runner_path(&mut self, runner_path: GodotString) {
+    fn set_runner_path(&mut self, runner_path: GString) {
         self.runner_path = runner_path.into();
     }
 
     #[func]
-    fn get_gui_path(&self) -> GodotString {
+    fn get_gui_path(&self) -> GString {
         self.gui_path.clone().into()
     }
 
     #[func]
-    fn set_gui_path(&mut self, gui_path: GodotString) {
+    fn set_gui_path(&mut self, gui_path: GString) {
         self.gui_path = gui_path.into();
     }
 
     #[func]
-    fn get_model_path(&self) -> GodotString {
+    fn get_model_path(&self) -> GString {
         self.model_path.clone().into()
     }
 
     #[func]
-    fn set_model_path(&mut self, model_path: GodotString) {
+    fn set_model_path(&mut self, model_path: GString) {
         self.model_path = model_path.into();
     }
 
     #[func]
-    fn get_preview_path(&self) -> GodotString {
+    fn get_preview_path(&self) -> GString {
         self.preview_path.clone().into()
     }
 
     #[func]
-    fn set_preview_path(&mut self, preview_path: GodotString) {
+    fn set_preview_path(&mut self, preview_path: GString) {
         self.preview_path = preview_path.into();
     }
 
@@ -417,7 +417,7 @@ impl RunnerData {
 
     /// Get the last used date as a string.
     #[func]
-    fn get_last_used_string(&self) -> GodotString {
+    fn get_last_used_string(&self) -> GString {
         self.last_used
             .format("%Y/%m/%d %H:%M:%S")
             .to_string()

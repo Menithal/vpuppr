@@ -26,7 +26,7 @@ pub struct IFacialMocapData {
 }
 
 #[godot_api]
-impl RefCountedVirtual for IFacialMocapData {
+impl IRefCounted for IFacialMocapData {
     fn init(_base: godot::obj::Base<Self::Base>) -> Self {
         Self::default()
     }
@@ -157,7 +157,7 @@ pub struct VTubeStudioData {
 }
 
 #[godot_api]
-impl RefCountedVirtual for VTubeStudioData {
+impl IRefCounted for VTubeStudioData {
     fn init(_base: godot::obj::Base<Self::Base>) -> Self {
         Self::default()
     }

@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use godot::{
-    engine::{ArrayMesh, MeshInstance3D, Skeleton3D},
+    classes::{ArrayMesh, MeshInstance3D, Skeleton3D},
     prelude::*,
 };
 
@@ -28,7 +28,7 @@ pub struct GlbPuppet {
     #[var]
     pub skeleton: Option<Gd<Skeleton3D>>,
     #[var]
-    pub head_bone: GodotString,
+    pub head_bone: GString,
     #[var]
     pub head_bone_id: i32,
     #[var]
@@ -48,7 +48,7 @@ impl Node3DVirtual for GlbPuppet {
             base,
 
             skeleton: None,
-            head_bone: GodotString::new(),
+            head_bone: GString::new(),
             head_bone_id: -1,
             additional_movement_bones: Array::new(),
             initial_bone_poses: Dictionary::new(),
