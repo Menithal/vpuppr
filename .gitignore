@@ -1,17 +1,15 @@
-<<<<<<< HEAD
+
 # Godot 4+ specific ignores
 .godot/
-export/*
+godot/export/*
 
 # libvpuppr
-*.gdextension
-**/*.dll
+**/**/*.dll
 
 # 3D models
 **/*.glb
 **/*.vrm
 
-=======
-/target
-Cargo.lock
->>>>>>> libvpuppr
+#cargo stuff
+rust/target
+rust/Cargo.lock

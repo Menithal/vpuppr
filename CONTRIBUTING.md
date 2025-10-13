@@ -68,8 +68,7 @@ DON'T:
 
 ---
 
-youwin is reachable on the following channels:
+Menithal is reachable on the following channels:
 
-- [Discord server](https://discord.com/invite/6mcdWWBkrr) (DMs are _not_ open)
-- [Mastodon](https://mastodon.gamedev.place/@youwin)
-- [Bluesky](https://bsky.app/profile/youwin.bsky.social)
+- [Bluesky](https://bsky.app/profile/malactus.norteclabs.com)
+- Discord: @Malactus

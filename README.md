@@ -2,27 +2,28 @@
 
 VTuber software made with Godot.
 
-Godot 4 rewrite in progress.
-
-The Godot 3 version is currently located on the `godot-3` branch.
+This is a recovery effort to get vpuppr to run on godot 4.5 using latest gdext conventions and possibly take over maintenance.
 
 ## Status
 
 General:
 
-- [ ] Pathfind project status after decay
+- [x] Pathfind project status after decay
+- [x] Use latest godot-rust conventions (monorepo)
 - [ ] Recover vpuppr
 	- [x] Build against latest rust and godot-rust (gdext)
-	- [ ] Does this run on godot 4.5
-	
-Legacy Status:
+		- [ ] Fix binding issues that have appeared
+	- [ ] Does this run on godot 4.5 ?
+
+
+# Legacy Status:
 - [x] VRM model loading
 - [x] Receive tracking data
 - [x] Map tracking data onto a VRM model
 - [ ] GUI (half-implemented)
 - [ ] Save data
 
-Tracking
+# Tracking Status
 
 - [x] [MediaPipe](https://github.com/google/mediapipe)
 - [x] [iFacialMocap](https://www.ifacialmocap.com/)
@@ -36,15 +37,9 @@ Tracking
 
 Prerequisites:
 
-* Godot 4.1.x
-* Rust 1.70+
+* Godot 4.5.x
+* Rust 1.90+
 * Python 3.8+ (any 3.x version is probably fine)
-
-Run `setup.sh` to:
-
-* refresh gitsubmodules
-* build `libvpuppr`
-* copy `libvpuppr`'s `.gdextension` file into the main project
 
 In order to build GDMP, follow the instructions in [that repo](https://github.com/j20001970/GDMP).
 
