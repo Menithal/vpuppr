@@ -19,7 +19,8 @@ var _expression_mappings := {}
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.create("VRMPuppet")
+	_logger = Logger.new()
+	_logger.set_name("VRMPuppet")
 
 func _ready() -> void:
 	_logger.debug("Starting ready")

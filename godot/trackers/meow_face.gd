@@ -1,7 +1,7 @@
 class_name MeowFace
 extends AbstractTracker
 
-var _logger := Logger.create("MeowFace")
+var _logger: Logger
 
 var _data_request: PackedByteArray = []
 
@@ -12,6 +12,10 @@ var _should_stop := true
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("MeowFace")
 
 #-----------------------------------------------------------------------------#
 # Private functions

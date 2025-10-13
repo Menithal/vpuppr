@@ -8,9 +8,11 @@ const LICENSE_DIR := "res://licenses"
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("Licenses")
+
 func _ready() -> void:
-	_logger = Logger.create("Licenses")
-	
 	var tree := %Tree
 	var pages := %Pages
 	

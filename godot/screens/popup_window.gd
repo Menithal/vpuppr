@@ -15,7 +15,8 @@ var _logger: Logger = null
 #-----------------------------------------------------------------------------#
 
 func _init(window_name: StringName, p_gui: Node) -> void:
-	_logger = Logger.create("Popup::{window_name}".format({window_name = window_name}))
+	_logger = Logger.new()
+	_logger.set_name("Popup::{window_name}".format({window_name = window_name}))
 	
 	gui = p_gui
 	

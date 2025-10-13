@@ -62,6 +62,8 @@ var _logger: Logger = null
 ## [b]Always needs to run. Call [code]super._init()[/code] if [code]_init[/code]
 ## needs to be modified.[/b]
 func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name(String(name))
 	ready.connect(func() -> void:
 		if tree == null or pages == null:
 			if _logger != null:
@@ -81,9 +83,6 @@ func _init() -> void:
 ## [b]Always needs to run. Call [code]super._ready()[/code] if [code]_ready[/code]
 ## needs to be modified.[/b]
 func _ready() -> void:
-	if _logger == null:
-		_logger = Logger.create(String(name))
-	
 	var children := get_children()
 	if children.size() != 2:
 		_logger.error("HSplitTree expected exactly 2 children, bailing out")

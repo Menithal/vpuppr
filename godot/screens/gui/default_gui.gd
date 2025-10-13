@@ -34,7 +34,7 @@ const HelpMenu := {
 	LICENSES = "Licenses"
 }
 
-var _logger := Logger.create("DefaultGui")
+var _logger : Logger
 
 var context: Context = null
 
@@ -48,6 +48,10 @@ var _active_popups: Array[PopupWindow] = []
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("DefaultGui")
 
 func _ready() -> void:
 	var app_menu := %App.get_popup() as PopupMenu

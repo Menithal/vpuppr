@@ -30,7 +30,7 @@ extends HBoxContainer
 
 signal message_received(message: GUIMessage)
 
-var _logger := Logger.create("SettingsOption:{n}".format({n = name}))
+var _logger : Logger;
 
 ## Value used for stepping if a child control supports stepping.
 @export
@@ -53,6 +53,10 @@ var control: Control = null
 #-----------------------------------------------------------------------------#
 
 func _init(p_name: String = "", control: Control = null) -> void:
+
+	_logger = Logger.new()
+	_logger.set_name("SettingsOption:{n}".format({n = name}))
+	
 	if p_name.is_empty() or control == null:
 		return
 	

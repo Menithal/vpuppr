@@ -69,23 +69,19 @@ impl LibVpuppr {
                 LevelFilter::Info
             })
             .log_fn(LevelFilter::Info, |r| {
-                Logger::global(LevelFilter::Info, r.target(), r.args().to_string().as_str());
+                Logger::global( GString::from(r.target()) ,  GString::from(r.args().to_string().as_str()));
             })
             .log_fn(LevelFilter::Warn, |r| {
-                Logger::global(LevelFilter::Warn, r.target(), r.args().to_string().as_str());
+                Logger::global(  GString::from(r.target()) , GString::from(r.args().to_string().as_str()));
             })
             .log_fn(LevelFilter::Error, |r| {
                 Logger::global(
-                    LevelFilter::Error,
-                    r.target(),
-                    r.args().to_string().as_str(),
+                    GString::from(r.target()), GString::from(r.args().to_string().as_str())
                 );
             })
             .log_fn(LevelFilter::Debug, |r| {
                 Logger::global(
-                    LevelFilter::Debug,
-                    r.target(),
-                    r.args().to_string().as_str(),
+                    GString::from(r.target()),  GString::from(r.args().to_string().as_str()),
                 );
             })
             .init()

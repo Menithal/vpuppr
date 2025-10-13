@@ -4,7 +4,7 @@ signal message_received(message: GUIMessage)
 
 const OPTION_KEY := &"common_options:environment_options"
 
-var _logger := Logger.create("Environment")
+var _logger : Logger
 
 @onready
 var _background_type := %BackgroundType
@@ -14,6 +14,10 @@ var _chromakey_color := %ChromakeyColor
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("Environment")
 
 func _ready() -> void:
 	_background_type.message_received.connect(func(message: GUIMessage) -> void:

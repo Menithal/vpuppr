@@ -1,8 +1,8 @@
 class_name VTubeStudio
 extends AbstractTracker
 
-var _logger := Logger.create("VTubeStudio")
-
+var _logger: Logger
+	
 var _data_request: PackedByteArray = []
 
 var _socket: PacketPeerUDP = null
@@ -12,6 +12,11 @@ var _should_stop := true
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("VTubeStudio")
+
 
 #-----------------------------------------------------------------------------#
 # Private functions

@@ -18,13 +18,14 @@ var model: Node = null
 
 var active_trackers := {}
 
-var _logger := Logger.create(String(NAME))
-
+var _logger: Logger
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
 func _init(p_runner_data: RunnerData) -> void:
+	_logger = Logger.new()
+	_logger.set_name(NAME)
 	name = NAME
 	var fail := func(text: String) -> void:
 		_logger.error(text)

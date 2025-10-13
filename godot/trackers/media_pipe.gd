@@ -8,7 +8,7 @@ const TASK_FILE := &"res://addons/GDMP/face_landmarker_v2_with_blendshapes.task"
 var _task: MediaPipeFaceLandmarker = null
 var _camera_helper: MediaPipeCameraHelper = null
 
-var _logger := Logger.create("MediaPipe")
+
 
 ## Starting the camera helper takes a while, so use a thread instead.
 var _start_thread: Thread = null
@@ -16,6 +16,11 @@ var _start_thread: Thread = null
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+var _logger: Logger
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("MediaPipe")
+
 
 func _notification(what: int) -> void:
 	match what:

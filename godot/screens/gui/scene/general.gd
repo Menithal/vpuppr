@@ -4,7 +4,7 @@ signal message_received(message: GUIMessage)
 
 const OPTION_KEY := &"puppet_data"
 
-var _logger := Logger.create("General")
+var _logger : Logger
 
 @onready
 var _enable_fly_camera := %EnableFlyCamera
@@ -19,6 +19,10 @@ var _model_z_position := %ModelZPosition
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("General")
 
 func _ready() -> void:
 	_enable_fly_camera.message_received.connect(func(message: GUIMessage) -> void:

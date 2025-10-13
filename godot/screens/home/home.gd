@@ -11,8 +11,7 @@ const SortDirection := {
 	"ASCENDING": "Ascending",
 	"DESCENDING": "Descending"
 }
-
-var _logger := Logger.create("Home")
+var _logger: Logger
 
 var _max_parallax_offset := Vector2(32.0, 18.0)
 
@@ -59,6 +58,11 @@ var _settings_popup: Window = null
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("Home")
+
+	
 func _ready() -> void:
 	_logger.debug("starting ready!")
 	
@@ -380,4 +384,3 @@ func _run_from_data(data: RunnerData, runner_item: Control = null) -> void:
 #-----------------------------------------------------------------------------#
 # Public functions
 #-----------------------------------------------------------------------------#
-

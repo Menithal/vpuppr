@@ -14,7 +14,7 @@ const HOME_PATH := "res://screens/home/home.tscn"
 ## Spin animation name.
 const SPIN_ANIM := "spin"
 
-var _logger := Logger.create("Splash")
+var _logger: Logger
 
 @onready
 var _icon := %Icon
@@ -45,6 +45,12 @@ var _status := []
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("Splash")
+
+
 
 func _ready() -> void:
 	var args := LibVpuppr.parse_user_args()
