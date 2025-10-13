@@ -7,40 +7,12 @@ use once_cell::sync::Lazy;
 
 // TODO: This entire logging method needs a rewrite to be more rust like.
 
-const MAX_LOGS: usize = 128;
-// no mutable statics!!!
-//static mut LOG_STORE: Lazy<Vec<String>> = Lazy::new(|| Vec::with_capacity(MAX_LOGS));
-
-/// Add a `message` to the static `LOG_STORE`.
-///
-/// Global access is needed since a Godot autoload might not be available for writing
-/// when the first logger is initialized.
-fn add_to_log_store(message: String) {
-   /* unsafe {
-        LOG_STORE.push(message);
-
-        if LOG_STORE.len() >= MAX_LOGS.into() {
-            flush_logs();
-        }
-    }*/
-}
-
-// TODO use custom log rotation strategy
-/// Flush all logs from the static `LOG_STORE` into a file.
-///
-/// # Safety
-/// Global access is needed for the log store since a Godot autoload might not be available for
-/// writing when the first logger is initialized.
-fn flush_logs() {
-    let project_settings = ProjectSettings::singleton();
-    // let path = project_settings.globalize_path(GodotString::from("user://vpuppr.log"));
-    let path = project_settings.globalize_path("user://vpuppr.log");
-
-    let mut opts = std::fs::OpenOptions::new();
-    opts.truncate(false).write(true).create(true);
-
-   
-}
+/**
+ * TODO:
+ *  - Log Rotation
+ *  - Log Flushing
+ *  - Log Storage
+ */
 
 /// The level to log outputs at.
 #[derive(Debug, PartialEq, Eq)]
@@ -48,7 +20,6 @@ enum LogLevel {
     Info,
     Warn,
     Error,
-
     Debug,
     Global,
 }
@@ -67,28 +38,21 @@ impl From<LevelFilter> for LogLevel {
 }
 
 /// A structured logger that helps work around Godot dropping logs when it crashes.
-#[derive(Debug, Clone, GodotClass)]
+#[derive(GodotClass)]
+#[class(init, base=RefCounted)]
 pub struct Logger {
+    base: Base<RefCounted>,
     name: String,
 }
 
 #[godot_api]
-impl IRefCounted for Logger {
-    fn init(_base: godot::obj::Base<Self::Base>) -> Self {
-        Self::new("DefaultLogger".to_string())
-    }
-}
-
-
-#[godot_api]
 impl Logger {
-
-    // GODOT 4.5 Uses new method of Logging instead of the way how this was done previously this need rewrite.
-    /// Create a new `Logger` in Godot with the given name. Loggers may have
-    /// duplicate names but this is **_strongly_** discouraged.
     #[func]
-    pub fn create(&mut self, name: GString) -> () {
-        self.name = name.into();
+    pub fn create(name: GString) ->  Gd<Logger>{
+        Gd::from_init_fn(|base| Logger {
+            base,
+            name: name.to_string(),
+        })
     }
 
     /// Sets the name of the logger.
@@ -99,46 +63,41 @@ impl Logger {
 
     /// Send a log at the `Info` log level. Logs are printed to stdout.
     #[func(rename = info)]
-    pub fn info_bound(&self, message: Variant) {
-        godot_print!("{}",message.stringify().to_string());
+    pub fn info_bound(&self, message: GString) {
+        godot_print!("{}",message);
     }
 
     /// Send a log at the `Warn` log level. Logs are printed to stdout.
     #[func(rename = warn)]
-    pub fn warn_bound(&self, message: Variant) {
-        godot_warn!("{}",message.stringify().to_string());
+    pub fn warn_bound(&self, message: GString) {
+        godot_warn!("{}",message);
     }
 
     /// Send a log at the `Error` log level. Logs are printed to stderr.
     #[func(rename = error)]
-    pub fn error_bound(&self, message: Variant) {
-        godot_error!("{}",message.stringify().to_string());
+    pub fn error_bound(&self, message: GString) {
+        godot_error!("{}",message);
     }
 
     /// Send a log at the `Debug` log leve. Logs are printed to stdout.
     #[func(rename = debug)]
-    pub fn debug_bound(&self, message: Variant) {
-        debug!("{}",message.stringify().to_string());
+    pub fn debug_bound(&self, message: GString) {
+        debug!("{}",message);
     }
 
     /// Send a log using an anonymous logger. Logs are printed to stdout.
     #[func(rename = global)]
-    pub fn global_bound(source: GString, message: Variant) {
+    pub fn global_bound(source: GString, message: GString) {
         
         Logger::global(
             LevelFilter::Info,
             source.to_string(),
-            message.stringify().to_string(),
+            message.to_string(),
         );
     }
 }
 
 impl Logger {
-    /// Create a new logger with the given name.
-    fn new(name: String) -> Self {
-        Self { name }
-    }
-
     /// Use the given `level` and `message` to send a log and add the log to
     /// the static `LOG_STORE`.
     fn log<T>(&self, level: LogLevel, message: T)
@@ -152,7 +111,7 @@ impl Logger {
         } else {
             godot_error!("{message}");
         }
-        add_to_log_store(message);
+        //add_to_log_store(message);
     }
 
     pub fn info<T>(&self, mut message: T)
@@ -195,7 +154,7 @@ impl Logger {
             LevelFilter::Info | LevelFilter::Debug => godot_print!("{message}"),
             _ => {}
         }
-        add_to_log_store(message);
+        //add_to_log_store(message);
     }
 }
 

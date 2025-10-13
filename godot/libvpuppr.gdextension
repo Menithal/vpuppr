@@ -4,8 +4,8 @@ compatibility_minimum = 4.5
 reloadable = true
 
 [libraries]
-windows.debug.x86_64 = "res://../../rust/target/debug/libvpuppr.dll"
-windows.release.x86_64 = "res://../../rust/target/release/libvpuppr.dll"
+windows.debug.x86_64 = "res://bin/debug/libvpuppr.dll"
+windows.release.x86_64 = "res://bin/release/libvpuppr.dll"
 
-linux.debug.x86_64 = "res://../../rust/target/debug/libvpuppr.so"
-linux.release.x86_64 = "res://../../rust/target/release/libvpuppr.so"
+linux.debug.x86_64 = "res://bin/debug/libvpuppr.so"
+linux.release.x86_64 = "res://bin/release/libvpuppr.so"
