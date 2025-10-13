@@ -10,6 +10,12 @@ The Godot 3 version is currently located on the `godot-3` branch.
 
 General:
 
+- [ ] Pathfind project status after decay
+- [ ] Recover vpuppr
+	- [x] Build against latest rust and godot-rust (gdext)
+	- [ ] Does this run on godot 4.5
+	
+Legacy Status:
 - [x] VRM model loading
 - [x] Receive tracking data
 - [x] Map tracking data onto a VRM model

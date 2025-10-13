@@ -8,15 +8,15 @@ Development guidelines to be followed while developing vpuppr.
 
 - [General](#general)
 - [vpuppr](#vpuppr)
-    - [Code Style](#code-style)
-    - [Formatting](#formatting)
-    - [Naming and Code Conventions](#naming-and-code-conventions)
-    - [Code Comments](#code-comments)
-    - [File Layout](#file-layout)
-    - [General GDScript Recommendations](#general-gdscript-recommendations)
+	- [Code Style](#code-style)
+	- [Formatting](#formatting)
+	- [Naming and Code Conventions](#naming-and-code-conventions)
+	- [Code Comments](#code-comments)
+	- [File Layout](#file-layout)
+	- [General GDScript Recommendations](#general-gdscript-recommendations)
 - [libvpuppr](#libvpuppr)
-    - [File Layout](#file-layout-1)
-    - [General Rust Recommendations](#general-rust-recommendations)
+	- [File Layout](#file-layout-1)
+	- [General Rust Recommendations](#general-rust-recommendations)
 
 # General
 

@@ -1,3 +1,4 @@
 [submodule "libvpuppr"]
 	path = libvpuppr
+	branch = pathfinder
 	url = git@github.com:Menithal/libvpuppr.git

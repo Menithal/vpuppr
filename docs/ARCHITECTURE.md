@@ -3,9 +3,9 @@
 ## Table of Contents
 
 - [Overview](#overview)
-    - [vpuppr](#vpuppr)
-    - [libvpuppr](#libvpuppr)
-    - [Modules Loaded at Runtime](#modules-loaded-at-runtime)
+	- [vpuppr](#vpuppr)
+	- [libvpuppr](#libvpuppr)
+	- [Modules Loaded at Runtime](#modules-loaded-at-runtime)
 - [Important Data Structures](#important-data-structures)
 - [Application Flow](#application-flow)
 
@@ -102,22 +102,22 @@ A `Tracker` only provides data.
 The general application flow is as follows:
 
 1. Splash
-    - Used for preloading resources
-    - No application logic should run
+	- Used for preloading resources
+	- No application logic should run
 2. Home
-    - Application data loaded
-    - Home mods loaded
-    - `Runner`s can be run
+	- Application data loaded
+	- Home mods loaded
+	- `Runner`s can be run
 3. `Context`
-    - Loads a `Runner`, `GUI`, and `Puppet`
-    - `Puppet` is added to the `Runner`
-    - Signals back to Home when loading is completed/fails
+	- Loads a `Runner`, `GUI`, and `Puppet`
+	- `Puppet` is added to the `Runner`
+	- Signals back to Home when loading is completed/fails
 4. `Context` (again)
-    - Home is unloaded
-    - `Context` is added to the `SceneTree` and displays the `Runner` + `GUI`
+	- Home is unloaded
+	- `Context` is added to the `SceneTree` and displays the `Runner` + `GUI`
 5. React to user input
-    - A user interacts with the `GUI` to start tracking or tweak `Puppet` parameters
-    - Data is saved on the `Context`
+	- A user interacts with the `GUI` to start tracking or tweak `Puppet` parameters
+	- Data is saved on the `Context`
 6. Quit to main menu/quit app
-    - Data on the `Context` is saved to the `user://` directory
-    - All resources are unloaded
+	- Data on the `Context` is saved to the `user://` directory
+	- All resources are unloaded
