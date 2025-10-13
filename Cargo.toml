@@ -17,11 +17,6 @@ chrono = { version = "0.4", default-features = false, features = [
     "time",
     "serde",
 ] }
-#godot = { git = "https://github.com/virtual-puppet-project/gdext", branch = "vpuppr", features = [
-#    "serde",
-#] } # this was the legacy version of gdext which tim had modified, but was denied upstream for godot-rust/gdext#456. 
-# Going to instead try to just use the upstream as tim used alot of time to try to maintain the custom gdext. This is also now renamed to godot-rust as we migrate to godot 4.5
-
 godot = { git = "https://github.com/godot-rust/gdext",  branch = "master", features = [ "serde"]} #should probably stick to a specific version
 #godot-logger = "1.1.0"
 log = "0.4.20"
