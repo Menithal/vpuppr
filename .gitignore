@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Godot 4+ specific ignores
 .godot/
 export/*
@@ -10,3 +11,7 @@ export/*
 **/*.glb
 **/*.vrm
 
+=======
+/target
+Cargo.lock
+>>>>>>> libvpuppr
