@@ -37,7 +37,7 @@ impl From<LevelFilter> for LogLevel {
     }
 }
 
-/// A structured logger that helps work around Godot dropping logs when it crashes.
+/// A structured logger that helps work around Godot dropping logs when it crashes. 
 #[derive(GodotClass)]
 #[class(init, base=RefCounted)]
 pub struct Logger {
@@ -111,7 +111,6 @@ impl Logger {
         } else {
             godot_error!("{message}");
         }
-        //add_to_log_store(message);
     }
 
     pub fn info<T>(&self, mut message: T)
@@ -154,7 +153,6 @@ impl Logger {
             LevelFilter::Info | LevelFilter::Debug => godot_print!("{message}"),
             _ => {}
         }
-        //add_to_log_store(message);
     }
 }
 
