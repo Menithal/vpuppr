@@ -13,3 +13,5 @@ godot/export/*
 #cargo stuff
 rust/target
 rust/Cargo.lock
+
+.vscode/
