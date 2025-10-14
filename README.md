@@ -1,6 +1,6 @@
-# Vpuppr
+## Vpuppr
 
-NOTE THIS NOT WORK YET, development in progress.
+# NOTE THIS DOES NOT WORK YET, recovery in progress.
 
 VTuber software made with Godot.
 
@@ -16,11 +16,10 @@ General:
 	- [x] Build against latest rust and godot-rust (gdext)
 		- [ ] Fix binding issues that have appeared
 	- [ ] Does this run on godot 4.5 ?
-		- [ ] Update Addons!
+		- [x] Update Addons!
 			- [x] VRM and Godot-M-Toon-Shader
-			- [ ] ~~RenIK~~ monxa/GodotIK 
-			- [-] GDMP
-				- HOLD: Have not updated due to latest just outright crashing Godot.
+			- [x] RenIK
+			- [ ] GDMP on HOLD: Have not updated due to latest just outright crashing Godot 4.5.
 - [ ] Successfully Runs
 
 
@@ -73,7 +72,15 @@ Previously, Vpuppr was separated into two parts and used submodules. We had libV
 Since both are linked, and  libVpupper was unlikely going to be used elsewehere, both were combined instead of kept separate to keep development pipelines straight forward 
 without having to swap around repositories or submodules.
 
-This should also match the conventions used by modern godot-rust projects and match their examples,
-even if gdextensions no longer support relative pathing OUTSIDE of the godot project.
+This should also match the conventions used by modern godot-rust projects and match their examples.
 
 History should have been maintained during the monorepository merge.
+
+
+## Considerations 
+
+### Change from V-sekai/RenIK to monxa/GodotIK.
+
+While RenIK seems to be kept uptodate, its public documentation is non-existant as of 10-2025 (even just basic implementation example!), with the previous version used in VPuppr being 2 years old and has logical source code available. 
+
+The recovery effort has no time to start digging further into a library that does not put any documentations online nor have any working examples. 

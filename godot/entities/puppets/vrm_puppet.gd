@@ -162,9 +162,8 @@ func _populate_and_modify_expression_mappings() -> void:
 		_expression_mappings[animation_name.to_lower()] = morphs
 
 func _setup_ik() -> Error:
-	print("TODO: Setup IK, No IK present.")
-	'''
-	var ren_ik: RenIK3D = RenIK.new()
+	var ren_ik: RenIKSpineModifier3D = RenIKSpineModifier3D.new()
+	
 	ren_ik.name = "RenIK3D"
 	
 	ren_ik.armature_skeleton_path = skeleton.get_path()
@@ -209,7 +208,6 @@ func _setup_ik() -> Error:
 	
 	add_child(ren_ik)
 	ren_ik.live_preview = true
-	'''
 	return OK
 
 #-----------------------------------------------------------------------------#

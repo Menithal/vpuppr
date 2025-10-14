@@ -1,9 +1,6 @@
 class_name Runner3D
 extends Node3D
 
-## A runner for 3D models.
-## TODO: Replace with monxa/GodotIK 
-## const RenIK: GDScript = preload("res://addons/renik/renik.gd")
 
 @onready
 var _world_environment: WorldEnvironment = $WorldEnvironment
