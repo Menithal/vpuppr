@@ -3,7 +3,7 @@ extends GLBPuppet
 
 
 # TODO: Remove this structrue
-const RenIK: GDScript = preload("res://addons/renik/renik.gd")
+#const RenIK: GDScript = preload("res://addons/renik/renik.gd")
 
 # var vrm_meta
 
@@ -162,6 +162,8 @@ func _populate_and_modify_expression_mappings() -> void:
 		_expression_mappings[animation_name.to_lower()] = morphs
 
 func _setup_ik() -> Error:
+	print("TODO: Setup IK, No IK present.")
+	'''
 	var ren_ik: RenIK3D = RenIK.new()
 	ren_ik.name = "RenIK3D"
 	
@@ -207,7 +209,7 @@ func _setup_ik() -> Error:
 	
 	add_child(ren_ik)
 	ren_ik.live_preview = true
-	
+	'''
 	return OK
 
 #-----------------------------------------------------------------------------#
