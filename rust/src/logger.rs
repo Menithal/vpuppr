@@ -3,23 +3,25 @@ use chrono::Local;
 
 #[derive(GodotClass)]
 #[class(base = RefCounted)]
-pub struct Logger {
+pub struct AppLogger {
     base: Base<RefCounted>,
     name: GString,
 }
 
 #[godot_api]
-impl IRefCounted for Logger {
+impl IRefCounted for AppLogger {
     fn init(base: Base<RefCounted>) -> Self {
         Self {
             base,
-            name: "DefaultLogger".into(),
+            name: "VLogger".into(),
         }
     }
 }
 
 #[godot_api]
-impl Logger {
+impl AppLogger {
+    
+
     #[func]
     pub fn create(name: GString) -> Gd<Self> {
         Gd::from_init_fn(|base| Self {

@@ -5,7 +5,7 @@ class ActiveTracker extends HBoxContainer:
 	
 	var tracker_name := ""
 	
-	func _init(p_parent_logger: Logger, p_tracker_name: String, p_tracker: AbstractTracker.Trackers) -> void:
+	func _init(p_parent_logger: AppLogger, p_tracker_name: String, p_tracker: AbstractTracker.Trackers) -> void:
 		size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		tracker_name = p_tracker_name
 		
@@ -42,8 +42,7 @@ var _pages := %Pages
 # Builtin functions
 #-----------------------------------------------------------------------------#
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("Tracking")
+	_logger = AppLogger.create("Tracking")
 
 
 func _ready() -> void:

@@ -16,8 +16,7 @@ var _chromakey_color := %ChromakeyColor
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("Environment")
+	_logger = AppLogger.create("Environment")
 
 func _ready() -> void:
 	_background_type.message_received.connect(func(message: GUIMessage) -> void:

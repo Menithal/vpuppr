@@ -15,7 +15,7 @@ use rayon::prelude::*;
 use crate::{
     gstring,
     model::{self, tracking_data::VTubeStudioData, IFacialMocapData},
-    Logger,
+    AppLogger,
 };
 
 use super::{BlendShapeMapping, IkTargets3d, Puppet, Puppet3d};
@@ -96,7 +96,7 @@ impl Default for VrmFeatures {
 // #[property(name = vrm_type, type = VrmType, get = get_vrm_type, set = set_vrm_type)]
 pub struct VrmPuppet {
     #[var]
-    pub logger: Gd<Logger>,
+    pub logger: Gd<AppLogger>,
 
     #[base]
     pub base: Base<Node3D>,
@@ -122,7 +122,7 @@ pub struct VrmPuppet {
 impl Node3DVirtual for VrmPuppet {
     fn init(base: godot::obj::Base<Self::Base>) -> Self {
         Self {
-            logger: Logger::create("VrmPuppet".into()),
+            logger: AppLogger::create("VrmPuppet".into()),
 
             base,
 
@@ -579,7 +579,7 @@ impl VrmPuppet {
 }
 
 impl Puppet for VrmPuppet {
-    fn logger(&self) -> Logger {
+    fn logger(&self) -> AppLogger {
         self.logger.bind().clone()
     }
 

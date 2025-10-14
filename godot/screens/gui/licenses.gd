@@ -9,8 +9,7 @@ const LICENSE_DIR := "res://licenses"
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("Licenses")
+	_logger = AppLogger.create("Licenses")
 
 func _ready() -> void:
 	var tree := %Tree

@@ -1,7 +1,7 @@
 class_name IFacialMocap
 extends AbstractTracker
 
-var _logger: Logger;
+var _logger: AppLogger;
 
 var _socket: PacketPeerUDP = null
 var _thread: Thread = null
@@ -13,8 +13,7 @@ var _should_stop := true
 # Builtin functions
 #-----------------------------------------------------------------------------#
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("iFacialMocap")
+	_logger = AppLogger.create("iFacialMocap")
 
 #-----------------------------------------------------------------------------#
 # Private functions

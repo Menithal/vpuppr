@@ -21,8 +21,7 @@ var _model_z_position := %ModelZPosition
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("General")
+	_logger = AppLogger.create("General")
 
 func _ready() -> void:
 	_enable_fly_camera.message_received.connect(func(message: GUIMessage) -> void:

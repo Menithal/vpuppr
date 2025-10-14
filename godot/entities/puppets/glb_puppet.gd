@@ -4,15 +4,14 @@ extends Node3D
 var puppet_data: Puppet3DData = null
 
 var skeleton: Skeleton3D = null
-var _logger: Logger = null
+var _logger: AppLogger = null
 
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("VRMPuppet")
+	_logger = AppLogger.create("VRMPuppet")
 	
 	pass
 

@@ -54,8 +54,7 @@ var control: Control = null
 
 func _init(p_name: String = "", control: Control = null) -> void:
 
-	_logger = Logger.new()
-	_logger.set_name("SettingsOption:{n}".format({n = name}))
+	_logger = AppLogger.create("SettingsOption:{n}".format({n = name}))
 	
 	if p_name.is_empty() or control == null:
 		return

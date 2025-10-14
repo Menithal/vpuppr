@@ -8,15 +8,14 @@ const UPDATE := &"update"
 
 var gui: Node = null
 
-var _logger: Logger = null
+var _logger: AppLogger = null
 
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
 func _init(window_name: StringName, p_gui: Node) -> void:
-	_logger = Logger.new()
-	_logger.set_name("Popup::{window_name}".format({window_name = window_name}))
+	_logger = AppLogger.create("Popup::{window_name}".format({window_name = window_name}))
 	
 	gui = p_gui
 	

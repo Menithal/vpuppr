@@ -1,7 +1,7 @@
 class_name VTubeStudio
 extends AbstractTracker
 
-var _logger: Logger
+var _logger: AppLogger
 	
 var _data_request: PackedByteArray = []
 
@@ -14,8 +14,7 @@ var _should_stop := true
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("VTubeStudio")
+	_logger = AppLogger.create("VTubeStudio")
 
 
 #-----------------------------------------------------------------------------#

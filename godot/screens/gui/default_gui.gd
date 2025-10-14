@@ -50,8 +50,7 @@ var _active_popups: Array[PopupWindow] = []
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("DefaultGui")
+	_logger = AppLogger.create("DefaultGui")
 
 func _ready() -> void:
 	var app_menu := %App.get_popup() as PopupMenu

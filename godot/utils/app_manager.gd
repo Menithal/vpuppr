@@ -1,7 +1,7 @@
 class_name AppManager
 extends Node
 const DEFAULT_SCREEN_SIZE := Vector2i(1600, 900)
-var logger: Logger
+var logger: AppLogger
 var metadata: Metadata = null
 
 ## Whether debug checks should be enabled. Can be overridden in production builds.
@@ -12,8 +12,7 @@ var debug_mode := OS.is_debug_build()
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	logger = Logger.new()
-	logger.set_name("AppManager")
+	logger = AppLogger.create("AppManager")
 	pass
 
 func _exit_tree() -> void:

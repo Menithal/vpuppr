@@ -14,10 +14,9 @@ var _start_thread: Thread = null
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
-var _logger: Logger
+var _logger: AppLogger
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("MediaPipe")
+	_logger = AppLogger.create("MediaPipe")
 
 
 func _notification(what: int) -> void:

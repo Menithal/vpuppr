@@ -14,7 +14,7 @@ const HOME_PATH := "res://screens/home/home.tscn"
 ## Spin animation name.
 const SPIN_ANIM := "spin"
 
-var _logger: Logger
+var _logger: AppLogger
 
 @onready
 var _icon := %Icon
@@ -47,9 +47,7 @@ var _status := []
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("Splash")
-
+	_logger = AppLogger.create("Splash")
 
 
 func _ready() -> void:

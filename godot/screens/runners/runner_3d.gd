@@ -12,14 +12,13 @@ var _camera: RunnerCamera3D = $RunnerCamera3D
 var _main_light: DirectionalLight3D = $DirectionalLight3D
 
 ## The logger for the runner.
-var _logger: Logger
+var _logger: AppLogger
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("Runner3D")
+	_logger = AppLogger.create("Runner3D")
 
 
 func _input(event: InputEvent) -> void:

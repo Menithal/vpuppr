@@ -50,7 +50,7 @@ var _current_page: PageListing = null
 var split_percent_decimal: float = 0.15
 
 ## The logger. Initialized in [method _ready].
-var _logger: Logger = null
+var _logger: AppLogger = null
 
 #-----------------------------------------------------------------------------#
 # Builtin functions
@@ -62,8 +62,7 @@ var _logger: Logger = null
 ## [b]Always needs to run. Call [code]super._init()[/code] if [code]_init[/code]
 ## needs to be modified.[/b]
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name(String(name))
+	_logger = AppLogger.create(String(name))
 	ready.connect(func() -> void:
 		if tree == null or pages == null:
 			if _logger != null:

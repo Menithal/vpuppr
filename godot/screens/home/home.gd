@@ -11,7 +11,7 @@ const SortDirection := {
 	"ASCENDING": "Ascending",
 	"DESCENDING": "Descending"
 }
-var _logger: Logger
+var _logger: AppLogger
 
 var _max_parallax_offset := Vector2(32.0, 18.0)
 
@@ -59,8 +59,7 @@ var _settings_popup: Window = null
 #-----------------------------------------------------------------------------#
 
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("Home")
+	_logger = AppLogger.create("Home")
 
 	
 func _ready() -> void:

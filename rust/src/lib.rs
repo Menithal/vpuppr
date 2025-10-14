@@ -12,7 +12,7 @@ use godot::{
 
 use log::{error, LevelFilter};
 
-pub use logger::Logger;
+pub use logger::AppLogger;
 
 /// Helper struct for information about the libvpuppr library.
 #[derive(Debug, Default, GodotClass)]
@@ -69,18 +69,18 @@ impl LibVpuppr {
                 LevelFilter::Info
             })
             .log_fn(LevelFilter::Info, |r| {
-                Logger::global( GString::from(r.target()) ,  GString::from(r.args().to_string().as_str()));
+                AppLogger::global( GString::from(r.target()) ,  GString::from(r.args().to_string().as_str()));
             })
             .log_fn(LevelFilter::Warn, |r| {
-                Logger::global(  GString::from(r.target()) , GString::from(r.args().to_string().as_str()));
+                AppLogger::global(  GString::from(r.target()) , GString::from(r.args().to_string().as_str()));
             })
             .log_fn(LevelFilter::Error, |r| {
-                Logger::global(
+                AppLogger::global(
                     GString::from(r.target()), GString::from(r.args().to_string().as_str())
                 );
             })
             .log_fn(LevelFilter::Debug, |r| {
-                Logger::global(
+                AppLogger::global(
                     GString::from(r.target()),  GString::from(r.args().to_string().as_str()),
                 );
             })
@@ -114,4 +114,5 @@ impl LibVpuppr {
 struct GodotExtension;
 
 #[gdextension]
-unsafe impl ExtensionLibrary for GodotExtension {}
+unsafe impl ExtensionLibrary for GodotExtension {
+}

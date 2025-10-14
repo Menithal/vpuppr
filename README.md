@@ -12,15 +12,18 @@ General:
 
 - [x] Pathfind project status after 2 years of dependency rot
 - [x] Use latest godot-rust conventions (monorepo)
-- [ ] Recover vpuppr
+- [x] Recover vpuppr
 	- [x] Build against latest rust and godot-rust (gdext)
-		- [ ] Fix binding issues that have appeared
-	- [ ] Does this run on godot 4.5 ?
+		- [x] Fix binding issues that have appeared
+	- [x] Does this run on godot 4.5 ?
 		- [x] Update Addons!
 			- [x] VRM and Godot-M-Toon-Shader
 			- [x] RenIK
 			- [ ] GDMP on HOLD: Have not updated due to latest just outright crashing Godot 4.5.
-- [ ] Successfully Runs
+	- [x] Successfully Runs
+- [ ] bugs bugs bugs
+	- [ ] Buttons no worky
+	- [ ] VRM Model file selector does now show up for Linux.
 
 
 # Modern State:

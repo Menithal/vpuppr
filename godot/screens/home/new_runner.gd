@@ -122,8 +122,7 @@ var window: Window = null
 # Builtin functions
 #-----------------------------------------------------------------------------#
 func _init() -> void:
-	_logger = Logger.new()
-	_logger.set_name("NewRunner")
+	_logger = AppLogger.create("NewRunner")
  
 
 func _ready() -> void:
