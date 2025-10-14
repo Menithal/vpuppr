@@ -19,7 +19,8 @@ General:
 		- [ ] Update Addons!
 			- [x] VRM and Godot-M-Toon-Shader
 			- [ ] ~~RenIK~~ monxa/GodotIK 
-			- [ ] GDMP
+			- [-] GDMP
+				- HOLD: Have not updated due to latest just outright crashing Godot.
 - [ ] Successfully Runs
 
 
