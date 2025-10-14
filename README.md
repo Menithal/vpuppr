@@ -18,7 +18,7 @@ General:
 	- [ ] Does this run on godot 4.5 ?
 		- [ ] Update Addons!
 			- [x] VRM and Godot-M-Toon-Shader
-			- [ ] ~~~RenIK~~~ monxa/GodotIK 
+			- [ ] ~~RenIK~~ monxa/GodotIK 
 			- [ ] GDMP
 - [ ] Successfully Runs
 
