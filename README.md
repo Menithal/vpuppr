@@ -4,19 +4,22 @@ NOTE THIS NOT WORK YET, development in progress.
 
 VTuber software made with Godot.
 
-This is a recovery effort to get vpuppr to run on godot 4.5 using latest gdext conventions and possibly take over maintenance, used as a learning opportunity to  learn the intricities of godot, and godot-next AND rust (no experience in any of them) while trying to make something the maintainer wants to also use.
-
+This is a recovery effort to get vpuppr to run on godot 4.5 using latest godot-rust conventions and possibly take over maintenance, used as a learning opportunity to  learn the intricities of godot, and godot-rust AND rust (no experience in ANY of them) while trying to make something this repo maintainer wants to also use, spurred with the recent migration to linux, preferring a native one-click-all solution than running multiple compatability layers and apps.
 
 ## Status
 
 General:
 
-- [x] Pathfind project status after decay
+- [x] Pathfind project status after 2 years of dependency rot
 - [x] Use latest godot-rust conventions (monorepo)
 - [ ] Recover vpuppr
 	- [x] Build against latest rust and godot-rust (gdext)
 		- [ ] Fix binding issues that have appeared
 	- [ ] Does this run on godot 4.5 ?
+		- [ ] Update Addons!
+			- [ ] VRM and Godot-M-Toon-Shader
+			- [ ] GDMP
+			- [ ] RenIK
 
 
 # Legacy Status:
@@ -44,11 +47,10 @@ Prerequisites:
 * Rust 1.90+
 * Python 3.8+ (any 3.x version is probably fine)
 
-1. Run `python3 build.py` or `. build.sh`. 
-	This will run `crate build` (debug) in `rust/` and move the resulting build to godot.
+1. In `rust/` run `crate build` (debug)
 2. Run `godot/`
 
-When ever updating the rust side, make sure to run the build script. This should automatically be hot reloaded on build.
+When ever updating the rust side, make sure to run the compile. Changes should be automatically reloaded into godot due to libvpuppr.gdextension configuration
 
 In order to build GDMP, follow the instructions in [that repo](https://github.com/j20001970/GDMP).
 
