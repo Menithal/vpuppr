@@ -122,6 +122,8 @@ func _export_preflight(state: GLTFState, root: Node) -> Error:
 	meshes = root.find_children("*", "MeshInstance3D")
 	for meshx in meshes:
 		var mesh: MeshInstance3D = meshx
+		if mesh.mesh == null:
+			continue
 		for m in range(mesh.mesh.get_surface_count()):
 			var mat: Material = mesh.get_surface_override_material(m)
 			if mat == null:
@@ -177,6 +179,9 @@ func _export_mtoon_texture(texture_index, vrm_mat_props, key):
 func _export_mtoon_properties(standard: StandardMaterial3D, mat_props: Dictionary, texture_to_index: Dictionary):
 	if "extensions" not in mat_props:
 		mat_props["extensions"] = {}
+	if not standard.has_meta("mtoon_material"):
+		# Not a toon material. Ignore
+		return
 	var new_mat: ShaderMaterial = standard.get_meta("mtoon_material")
 	var vrm_mat_props: Dictionary = {}
 	mat_props["extensions"]["VRMC_materials_mtoon"] = vrm_mat_props
@@ -232,7 +237,7 @@ func _export_mtoon_properties(standard: StandardMaterial3D, mat_props: Dictionar
 
 
 func _export_post(state: GLTFState) -> Error:
-	var texdic: Dictionary = state.get_meta("texture_dictionary")
+	var texdic = state.get_meta("texture_dictionary")
 	var texture_to_gltf_image_idx: Dictionary = {}
 	var gltf_image_idx_to_first_gltf_texture_idx: Dictionary = {}
 	var json = state.json
@@ -244,18 +249,19 @@ func _export_post(state: GLTFState) -> Error:
 		texture_to_gltf_image_idx[gltf_images[i]] = i
 
 	var texture_to_index: Dictionary = {}  # Texture to index in the textures array, not images array
-	for texture_idx in texdic:
-		texture_to_index[texdic[texture_idx]] = texture_idx
-		gltf_tex[texture_idx].src_image = texture_to_gltf_image_idx[texdic[texture_idx]]
-		json["textures"][texture_idx]["source"] = texture_to_gltf_image_idx[texdic[texture_idx]]
+	if typeof(texdic) == TYPE_DICTIONARY:
+		for texture_idx in texdic:
+			texture_to_index[texdic[texture_idx]] = texture_idx
+			gltf_tex[texture_idx].src_image = texture_to_gltf_image_idx[texdic[texture_idx]]
+			json["textures"][texture_idx]["source"] = texture_to_gltf_image_idx[texdic[texture_idx]]
 
-	# Use the first matched index instead of the extra one we created.
-	for texture_idx in range(len(gltf_tex)):
-		if not gltf_image_idx_to_first_gltf_texture_idx.has(gltf_tex[texture_idx].src_image):
-			gltf_image_idx_to_first_gltf_texture_idx[gltf_tex[texture_idx].src_image] = texture_idx
-			if texdic.has(texture_idx):
-				texture_to_index[texdic[texture_idx]] = texture_idx
-	state.textures = gltf_tex
+		# Use the first matched index instead of the extra one we created.
+		for texture_idx in range(len(gltf_tex)):
+			if not gltf_image_idx_to_first_gltf_texture_idx.has(gltf_tex[texture_idx].src_image):
+				gltf_image_idx_to_first_gltf_texture_idx[gltf_tex[texture_idx].src_image] = texture_idx
+				if texdic.has(texture_idx):
+					texture_to_index[texdic[texture_idx]] = texture_idx
+		state.textures = gltf_tex
 
 	var gltf_materials: Array[Material] = state.materials
 	for i in range(len(gltf_materials)):
@@ -267,7 +273,7 @@ func _export_post(state: GLTFState) -> Error:
 	return OK
 
 
-func _vrm_get_texture_info(gstate : GLTFState, vrm_mat_props: Dictionary, unity_tex_name: String) -> Dictionary:
+func _vrm_get_texture_info(gstate: GLTFState, vrm_mat_props: Dictionary, unity_tex_name: String) -> Dictionary:
 	var gltf_images: Array = gstate.get_images()
 	var gltf_textures: Array = gstate.get_textures()
 	var texture_info: Dictionary = {}
@@ -284,6 +290,7 @@ func _vrm_get_texture_info(gstate : GLTFState, vrm_mat_props: Dictionary, unity_
 		texture_info["offset"] = Vector3(offsetScale[0], offsetScale[1], 0.0)
 		texture_info["scale"] = Vector3(offsetScale[2], offsetScale[3], 1.0)
 	return texture_info
+
 
 func _vrm_get_float(vrm_mat_props: Dictionary, key: String, def: float) -> float:
 	return vrm_mat_props["floatProperties"].get(key, def)

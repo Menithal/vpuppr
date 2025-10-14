@@ -67,9 +67,6 @@ func _create_license_gui(page_name: String, content: String) -> RichTextLabel:
 	
 	return page
 
-func _create_logger() -> void:
-	_logger = Logger.create("Licenses")
-
 #-----------------------------------------------------------------------------#
 # Public functions
 #-----------------------------------------------------------------------------#

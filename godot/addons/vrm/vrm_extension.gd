@@ -14,7 +14,6 @@ const vrm_utils = preload("./vrm_utils.gd")
 
 var vrm_meta: Resource = null
 
-
 enum DebugMode {
 	None = 0,
 	Normal = 1,
@@ -69,7 +68,7 @@ func _process_khr_material(orig_mat: StandardMaterial3D, gltf_mat_props: Diction
 	return orig_mat
 
 
-func _vrm_get_texture_info(gstate : GLTFState, vrm_mat_props: Dictionary, unity_tex_name: String) -> Dictionary:
+func _vrm_get_texture_info(gstate: GLTFState, vrm_mat_props: Dictionary, unity_tex_name: String) -> Dictionary:
 	var gltf_images: Array = gstate.get_images()
 	var gltf_textures: Array = gstate.get_textures()
 	var texture_info: Dictionary = {}
@@ -92,8 +91,7 @@ func _vrm_get_float(vrm_mat_props: Dictionary, key: String, def: float) -> float
 	return vrm_mat_props["floatProperties"].get(key, def)
 
 
-func _process_vrm_material(orig_mat: Material, gstate : GLTFState, vrm_mat_props: Dictionary) -> Material:
-
+func _process_vrm_material(orig_mat: Material, gstate: GLTFState, vrm_mat_props: Dictionary) -> Material:
 	var gltf_images: Array = gstate.get_images()
 	var gltf_textures: Array = gstate.get_textures()
 
@@ -194,6 +192,11 @@ func _process_vrm_material(orig_mat: Material, gstate : GLTFState, vrm_mat_props
 			new_mat.set_shader_parameter(param_name, tex_info["tex"])
 			if outline_mat != null:
 				outline_mat.set_shader_parameter(param_name, tex_info["tex"])
+
+			if param_name == "_SphereAdd":
+				new_mat.set_shader_parameter("_MatcapColor", Color(1.0, 1.0, 1.0, 1.0))
+				if outline_mat != null:
+					outline_mat.set_shader_parameter("_MatcapColor", Color(1.0, 1.0, 1.0, 1.0))
 
 	for param_name in vrm_mat_props["floatProperties"]:
 		new_mat.set_shader_parameter(param_name, vrm_mat_props["floatProperties"][param_name])
@@ -324,13 +327,11 @@ func _get_skel_godot_node(gstate: GLTFState, nodes: Array, skeletons: Array, ske
 
 
 func _first_person_head_hiding(vrm_extension: Dictionary, gstate: GLTFState, human_bone_to_idx: Dictionary):
-	var nodes = gstate.get_nodes()
-	var skeletons = gstate.get_skeletons()
 	var firstperson = vrm_extension.get("firstPerson", null)
 
-	var mesh_to_head_hidden_mesh: Dictionary = {}
+	var nodes := gstate.get_nodes()
+	var skeletons := gstate.get_skeletons()
 	var node_to_head_hidden_node: Dictionary = {}
-
 	var head_relative_bones: Dictionary = {}  # To determine which meshes to hide.
 
 	var head_bone_idx = firstperson.get("firstPersonBone", human_bone_to_idx.get("head", -1))
@@ -341,61 +342,14 @@ func _first_person_head_hiding(vrm_extension: Dictionary, gstate: GLTFState, hum
 
 	var mesh_annotations_by_mesh = {}
 	for meshannotation in firstperson.get("meshAnnotations", []):
-		mesh_annotations_by_mesh[int(meshannotation["mesh"])] = meshannotation
-
+		var s: String = meshannotation.get("firstPersonFlag", "Auto")
+		mesh_annotations_by_mesh[int(meshannotation["mesh"])] = s.substr(0, 1).to_lower() + s.substr(1)
+	var mesh_annotations_by_node = {}
 	for node_idx in range(len(nodes)):
-		var gltf_node: GLTFNode = nodes[node_idx]
-		var node: Node = gstate.get_scene_node(node_idx)
-		if node is ImporterMeshInstance3D:
-			var meshannotation = mesh_annotations_by_mesh.get(gltf_node.mesh, {})
+		if nodes[node_idx].mesh != -1 and mesh_annotations_by_mesh.has(nodes[node_idx].mesh):
+			mesh_annotations_by_node[node_idx] = mesh_annotations_by_mesh[nodes[node_idx].mesh]
 
-			var flag: String = meshannotation.get("firstPersonFlag", "Auto")
-
-			# Non-skinned meshes: use flag.
-			var mesh: ImporterMesh = node.mesh
-			var head_hidden_mesh: ImporterMesh = mesh
-			if flag == "Auto":
-				if node.skin == null:
-					var parent_node = node.get_parent()
-					if parent_node is BoneAttachment3D:
-						if head_relative_bones.has(parent_node.bone_name):
-							flag = "ThirdPersonOnly"
-				else:
-					head_hidden_mesh = vrm_utils._generate_hide_bone_mesh(mesh, node.skin, head_relative_bones)
-					if head_hidden_mesh == null:
-						flag = "ThirdPersonOnly"
-					if head_hidden_mesh == mesh:
-						flag = "Both"  # Nothing to do: No head verts.
-
-			var layer_mask: int = 6  # "both"
-			if flag == "ThirdPersonOnly":
-				layer_mask = 4
-			elif flag == "FirstPersonOnly":
-				layer_mask = 2
-
-			if flag == "Auto" and head_hidden_mesh != mesh:  # If it is still "auto", we have something to hide.
-				mesh_to_head_hidden_mesh[mesh] = head_hidden_mesh
-				var head_hidden_node: ImporterMeshInstance3D = ImporterMeshInstance3D.new()
-				head_hidden_node.name = node.name + " (Headless)"
-				head_hidden_node.skin = node.skin
-				head_hidden_node.mesh = head_hidden_mesh
-				head_hidden_node.skeleton_path = node.skeleton_path
-				head_hidden_node.script = importer_mesh_attributes
-				head_hidden_node.layers = 2  # ImporterMeshInstance3D is missing APIs.
-				head_hidden_node.first_person_flag = "head_removed"
-
-				node.add_sibling(head_hidden_node)
-				head_hidden_node.owner = node.owner
-				var gltf_mesh: GLTFMesh = GLTFMesh.new()
-				gltf_mesh.mesh = head_hidden_mesh
-				# FIXME: do we need to assign gltf_mesh.instance_materials?
-				gstate.meshes.append(gltf_mesh)
-				node_to_head_hidden_node[node] = head_hidden_node
-				layer_mask = 4
-
-			node.script = importer_mesh_attributes
-			node.layers = layer_mask
-			node.first_person_flag = flag.substr(0, 1).to_lower() + flag.substr(1)
+	vrm_utils.perform_head_hiding(gstate, mesh_annotations_by_node, head_relative_bones, node_to_head_hidden_node)
 
 
 # https://github.com/vrm-c/vrm-specification/blob/master/specification/0.0/schema/vrm.humanoid.bone.schema.json
@@ -526,21 +480,12 @@ func _create_animation_player(animplayer: AnimationPlayer, vrm_extension: Dictio
 	var nodes = gstate.get_nodes()
 	var blend_shape_groups = vrm_extension["blendShapeMaster"]["blendShapeGroups"]
 	# FIXME: Do we need to handle multiple references to the same mesh???
-	var mesh_idx_to_meshinstance: Dictionary = {}
+	var mesh_idx_to_meshinstance: Dictionary = vrm_utils.generate_mesh_index_to_meshinstance_mapping(gstate)
 	var material_name_to_mesh_and_surface_idx: Dictionary = {}
 	for i in range(meshes.size()):
 		var gltfmesh: GLTFMesh = meshes[i]
 		for j in range(gltfmesh.mesh.get_surface_count()):
 			material_name_to_mesh_and_surface_idx[gltfmesh.mesh.get_surface_material(j).resource_name] = [i, j]
-
-	for i in range(nodes.size()):
-		var gltfnode: GLTFNode = nodes[i]
-		var mesh_idx: int = gltfnode.mesh
-		#print("node idx " + str(i) + " node name " + gltfnode.resource_name + " mesh idx " + str(mesh_idx))
-		if mesh_idx != -1:
-			var scenenode: ImporterMeshInstance3D = gstate.get_scene_node(i)
-			mesh_idx_to_meshinstance[mesh_idx] = scenenode
-			#print("insert " + str(mesh_idx) + " node name " + scenenode.name)
 
 	var firstperson = vrm_extension["firstPerson"]
 
@@ -550,32 +495,39 @@ func _create_animation_player(animplayer: AnimationPlayer, vrm_extension: Dictio
 	for shape in blend_shape_groups:
 		#print("Blend shape group: " + shape["name"])
 		var anim = Animation.new()
-
 		for matbind in shape["materialValues"]:
 			var mesh_and_surface_idx = material_name_to_mesh_and_surface_idx[matbind["materialName"]]
 			var node: ImporterMeshInstance3D = mesh_idx_to_meshinstance[mesh_and_surface_idx[0]]
 			var surface_idx = mesh_and_surface_idx[1]
 
-			var mat: Material = node.get_surface_material(surface_idx)
-			var paramprop = "shader_parameter/" + matbind["parameterName"]
+			var mat: Material = node.mesh.get_surface_material(surface_idx)
+			var paramprop = "shader_parameter/" + matbind["propertyName"]
 			var origvalue = null
 			var tv = matbind["targetValue"]
 			var newvalue = tv[0]
 
 			if mat is ShaderMaterial:
 				var smat: ShaderMaterial = mat
-				var param = smat.get_shader_parameter(matbind["parameterName"])
+				var param = smat.get_shader_parameter(matbind["propertyName"])
 				if param is Color:
 					origvalue = param
-					newvalue = Color(tv[0], tv[1], tv[2], tv[3])
-				elif matbind["parameterName"] == "_MainTex" or matbind["parameterName"] == "_MainTex_ST":
+					if len(tv) >= 4:
+						newvalue = Color(tv[0], tv[1], tv[2], tv[3])
+					else:
+						printerr("Expected 4 values but got " + str(len(tv)) + " for parameter " + matbind["propertyName"] + " surface " + node.name + "/" + str(surface_idx))
+						newvalue = origvalue # Filler value for consistency.
+				elif matbind["propertyName"] == "_MainTex" or matbind["propertyName"] == "_MainTex_ST":
 					origvalue = param
-					newvalue = (Vector4(tv[2], tv[3], tv[0], tv[1]) if matbind["parameterName"] == "_MainTex" else Vector4(tv[0], tv[1], tv[2], tv[3]))
+					if len(tv) >= 4:
+						newvalue = (Vector4(tv[2], tv[3], tv[0], tv[1]) if matbind["propertyName"] == "_MainTex" else Vector4(tv[0], tv[1], tv[2], tv[3]))
+					else:
+						printerr("Expected 4 values but got " + str(len(tv)) + " for parameter " + matbind["propertyName"] + " surface " + node.name + "/" + str(surface_idx))
+						newvalue = origvalue # Filler value for consistency.
 				elif param is float:
 					origvalue = param
 					newvalue = tv[0]
 				else:
-					printerr("Unknown type for parameter " + matbind["parameterName"] + " surface " + node.name + "/" + str(surface_idx))
+					printerr("Unknown type for parameter " + matbind["propertyName"] + " surface " + node.name + "/" + str(surface_idx))
 
 			if origvalue != null:
 				var animtrack: int = anim.add_track(Animation.TYPE_VALUE)
@@ -591,7 +543,7 @@ func _create_animation_player(animplayer: AnimationPlayer, vrm_extension: Dictio
 			var node: ImporterMeshInstance3D = mesh_idx_to_meshinstance[int(bind["mesh"])]
 			var nodeMesh: ImporterMesh = node.mesh
 
-			if bind["index"] < 0 || bind["index"] >= nodeMesh.get_blend_shape_count():
+			if nodeMesh == null || bind["index"] < 0 || bind["index"] >= nodeMesh.get_blend_shape_count():
 				printerr("Invalid blend shape index in bind " + str(shape) + " for mesh " + str(node.name))
 				continue
 			var animtrack: int = anim.add_track(Animation.TYPE_BLEND_SHAPE)
@@ -777,7 +729,9 @@ func _parse_secondary_node(secondary_node: Node, vrm_extension: Dictionary, gsta
 			collider.bone = bone
 			collider.resource_name = new_resource_name
 			var offset_obj = collider_info.get("offset", {"x": 0.0, "y": 0.0, "z": 0.0})
-			var local_pos: Vector3 = pose_diff * offset_flip * Vector3(offset_obj["x"], offset_obj["y"], offset_obj["z"])
+			var offset_vec = offset_flip * Vector3(offset_obj["x"], offset_obj["y"], offset_obj["z"])
+			# beware that quat * vec * vec multiplication is not associative
+			var local_pos: Vector3 = pose_diff * offset_vec
 			var radius: float = collider_info.get("radius", 0.0)
 			collider.is_capsule = false
 			collider.offset = local_pos
@@ -838,11 +792,11 @@ func _parse_secondary_node(secondary_node: Node, vrm_extension: Dictionary, gsta
 			spring_bone.collider_groups = spring_collider_groups
 			for bone_name in chain:
 				spring_bone.joint_nodes.push_back(bone_name)  # end bone will be named ""
-				spring_bone.stiffness_force.push_back(stiffness_force)
-				spring_bone.gravity_power.push_back(gravity_power)
-				spring_bone.gravity_dir.push_back(gravity_dir)
-				spring_bone.drag_force.push_back(drag_force)
-				spring_bone.hit_radius.push_back(hit_radius)
+			spring_bone.stiffness_scale = stiffness_force
+			spring_bone.gravity_scale = gravity_power
+			spring_bone.gravity_dir_default = gravity_dir
+			spring_bone.drag_force_scale = drag_force
+			spring_bone.hit_radius_scale = hit_radius
 
 			if not comment.is_empty():
 				spring_bone.resource_name = comment.split("\n")[0]
@@ -854,7 +808,6 @@ func _parse_secondary_node(secondary_node: Node, vrm_extension: Dictionary, gsta
 	secondary_node.set_script(vrm_secondary)
 	secondary_node.set("skeleton", skeleton_path)
 	secondary_node.set("spring_bones", spring_bones)
-	secondary_node.set("collider_groups", collider_groups)
 
 
 func _add_joints_recursive(new_joints_set: Dictionary, gltf_nodes: Array, bone: int, include_child_meshes: bool = false) -> void:
@@ -914,6 +867,9 @@ func _import_preflight(gstate: GLTFState, extensions: PackedStringArray = Packed
 	if extensions.has("VRMC_vrm"):
 		# VRM 1.0 file. Do not parse as a VRM 0.0.
 		return ERR_INVALID_DATA
+	if typeof(gstate.get_additional_data(&"vrm/already_processed")) != TYPE_NIL:
+		return ERR_SKIP
+	gstate.set_additional_data(&"vrm/already_processed", true)
 	var gltf_json_parsed: Dictionary = gstate.json
 	var gltf_nodes = gltf_json_parsed["nodes"]
 	if not _add_vrm_nodes_to_skin(gltf_json_parsed):
@@ -922,6 +878,14 @@ func _import_preflight(gstate: GLTFState, extensions: PackedStringArray = Packed
 	for node in gltf_nodes:
 		if node.get("name", "") == "Root":
 			node["name"] = "Root_"
+	return OK
+
+
+func _import_post_parse(state: GLTFState) -> Error:
+	var nodes := state.get_nodes()
+	for n in nodes:
+		if typeof(n.get_additional_data(&"GODOT_rest_transform")) == TYPE_NIL:
+			n.set_additional_data(&"GODOT_rest_transform", n.get_xform())
 	return OK
 
 
@@ -961,7 +925,8 @@ func _import_post(gstate: GLTFState, node: Node) -> Error:
 
 	if is_vrm_0:
 		# VRM 0.0 has models facing backwards due to a spec error (flipped z instead of x)
-		vrm_utils.rotate_scene_180(root_node)
+		var blend_shape_names: Dictionary = vrm_utils._extract_blendshape_names(gltf_json)
+		vrm_utils.rotate_scene_180(root_node, blend_shape_names, gstate)
 
 	var do_retarget = true
 

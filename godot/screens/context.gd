@@ -220,6 +220,7 @@ func start_tracker(tracker: AbstractTracker.Trackers) -> Error:
 				return ERR_CANT_CREATE
 			
 			tracker_instance.data_received.connect(model.handle_vtube_studio)
+			'''
 		AbstractTracker.Trackers.MEDIA_PIPE:
 			tracker_instance = MediaPipe.start(runner_data.common_options.mediapipe_options)
 			if tracker_instance == null:
@@ -227,6 +228,7 @@ func start_tracker(tracker: AbstractTracker.Trackers) -> Error:
 				return ERR_CANT_CREATE
 
 			tracker_instance.data_received.connect(model.handle_mediapipe)
+			'''
 		AbstractTracker.Trackers.I_FACIAL_MOCAP:
 			tracker_instance = IFacialMocap.start(runner_data.common_options.ifacial_mocap_options)
 			if tracker_instance == null:

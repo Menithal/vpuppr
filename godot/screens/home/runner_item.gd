@@ -31,7 +31,9 @@ var _panel: StyleBoxFlat = self.get_indexed("theme_override_styles/panel").dupli
 #-----------------------------------------------------------------------------#
 
 func _ready() -> void:
-	var logger := Logger.create("RunnerItem:_ready:{0}".format([data.name]))
+	var logger: Logger = Logger.new();
+	logger.set_name("RunnerItem:_ready:{0}".format([data.name]))
+	
 	if data == null:
 		logger.error("Data was null for RunnerItem {0}, aborting ready!".format([self]))
 		return

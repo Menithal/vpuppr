@@ -1,6 +1,8 @@
 class_name VRMPuppet
 extends GLBPuppet
 
+
+# TODO: Remove this structrue
 const RenIK: GDScript = preload("res://addons/renik/renik.gd")
 
 # var vrm_meta
@@ -283,6 +285,8 @@ func handle_ifacial_mocap(raw_data: PackedByteArray) -> void:
 			
 			blend_shape_mapping.child.set_indexed(blend_shape_mapping.property_path, data.blend_shapes[shape])
 
+'''
+# TODO Proper impl
 func handle_mediapipe(projection: Projection, blend_shapes: Array[MediaPipeCategory]) -> void:
 	var tx := Transform3D(projection.inverse())
 	
@@ -309,7 +313,7 @@ func handle_mediapipe(projection: Projection, blend_shapes: Array[MediaPipeCateg
 				continue
 			
 			blend_shape_mapping.child.set_indexed(blend_shape_mapping.property_path, shape.score)
-
+'''
 func handle_vtube_studio(raw_data: PackedByteArray) -> void:
 	var data := DataParser.vtube_studio(raw_data)
 	

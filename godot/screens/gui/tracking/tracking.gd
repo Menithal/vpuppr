@@ -31,7 +31,7 @@ signal message_received(message: GUIMessage)
 const TREE_COL: int = 0
 const Trackers := AbstractTracker.Trackers
 
-var _logger := Logger.create("Tracking")
+var _logger : Logger
 
 @onready
 var _active_trackers := %ActiveTrackers
@@ -41,6 +41,10 @@ var _pages := %Pages
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("Tracking")
+
 
 func _ready() -> void:
 	%StopAll.pressed.connect(func() -> void:

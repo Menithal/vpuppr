@@ -8,8 +8,6 @@ const TASK_FILE := &"res://addons/GDMP/face_landmarker_v2_with_blendshapes.task"
 var _task: MediaPipeFaceLandmarker = null
 var _camera_helper: MediaPipeCameraHelper = null
 
-
-
 ## Starting the camera helper takes a while, so use a thread instead.
 var _start_thread: Thread = null
 

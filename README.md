@@ -17,24 +17,25 @@ General:
 		- [ ] Fix binding issues that have appeared
 	- [ ] Does this run on godot 4.5 ?
 		- [ ] Update Addons!
-			- [ ] VRM and Godot-M-Toon-Shader
-			- [ ] GDMP
+			- [x] VRM and Godot-M-Toon-Shader
 			- [ ] RenIK
+			- [ ] GDMP
+- [ ] Successfully Runs
 
 
-# Legacy Status:
-- [x] VRM model loading
-- [x] Receive tracking data
-- [x] Map tracking data onto a VRM model
+# Modern State:
+- [ ] VRM model loading
+- [ ] Receive tracking data
+- [ ] Map tracking data onto a VRM model
 - [ ] GUI (half-implemented)
 - [ ] Save data
 
 # Tracking Status
 
-- [x] [MediaPipe](https://github.com/google/mediapipe)
-- [x] [iFacialMocap](https://www.ifacialmocap.com/)
-- [x] [MeowFace](https://play.google.com/store/apps/details?id=com.suvidriel.meowface)
-- [x] [VTube Studio](https://denchisoft.com/)
+- [ ] [MediaPipe](https://github.com/google/mediapipe)
+- [ ] [iFacialMocap](https://www.ifacialmocap.com/)
+- [ ] [MeowFace](https://play.google.com/store/apps/details?id=com.suvidriel.meowface)
+- [ ] [VTube Studio](https://denchisoft.com/)
 - [ ] [OpenSeeFace](https://github.com/emilianavt/OpenSeeFace)
 - [ ] [Mouse tracking](https://github.com/virtual-puppet-project/mouse-tracker)
 - [ ] [Lip sync](https://github.com/virtual-puppet-project/real-time-lip-sync-gd)

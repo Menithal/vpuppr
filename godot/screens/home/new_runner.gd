@@ -31,7 +31,7 @@ var _model_type := ModelType.NONE:
 				_advanced_options_toggle.button_pressed = true
 
 ## Logger for the new runner selector.
-var _logger := Logger.create("NewRunner")
+var _logger : Logger
 
 ## Name of the runner.
 @onready
@@ -121,6 +121,10 @@ var window: Window = null
 #-----------------------------------------------------------------------------#
 # Builtin functions
 #-----------------------------------------------------------------------------#
+func _init() -> void:
+	_logger = Logger.new()
+	_logger.set_name("NewRunner")
+ 
 
 func _ready() -> void:
 	if window == null:
@@ -302,4 +306,3 @@ func _validate_custom_runner_path(text: String) -> void:
 #-----------------------------------------------------------------------------#
 # Public functions
 #-----------------------------------------------------------------------------#
-
