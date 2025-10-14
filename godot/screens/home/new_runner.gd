@@ -31,7 +31,7 @@ var _model_type := ModelType.NONE:
 				_advanced_options_toggle.button_pressed = true
 
 ## Logger for the new runner selector.
-var _logger : Logger
+var _logger : AppLogger
 
 ## Name of the runner.
 @onready

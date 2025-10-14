@@ -12,8 +12,6 @@ var _logger: AppLogger = null
 
 func _init() -> void:
 	_logger = AppLogger.create("VRMPuppet")
-	
-	pass
 
 #-----------------------------------------------------------------------------#
 # Private functions

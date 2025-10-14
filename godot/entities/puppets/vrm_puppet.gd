@@ -20,11 +20,9 @@ var _expression_mappings := {}
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
-func _init() -> void:
-	_logger = AppLogger.new("VRMPuppet")
-	_logger.set_name()
-
 func _ready() -> void:
+	if(_logger == null): _logger = AppLogger.create("VRMPuppet")
+	
 	_logger.debug("Starting ready")
 	
 	if puppet_data == null:
@@ -52,9 +50,9 @@ func _ready() -> void:
 		var bone_name: String = ik_armature_names[variable_name]
 		_create_ik_armature(variable_name, bone_name)
 
-	_populate_blend_shape_mappings()
+	'''_populate_blend_shape_mappings()
 	_populate_and_modify_expression_mappings()
-	_setup_ik()
+	_setup_ik()'''
 
 	_logger.debug("Finished ready")
 
@@ -162,12 +160,13 @@ func _populate_and_modify_expression_mappings() -> void:
 		_expression_mappings[animation_name.to_lower()] = morphs
 
 func _setup_ik() -> Error:
-	var ren_ik: RenIKSpineModifier3D = RenIKSpineModifier3D.new()
+	var ren_ik: RenIKSpineModifier3D = RenIKSpineModifier3D.new() #Skeleton3DModifier
+	ren_ik.name = "RenIKSpineModifier3D"
 	
-	ren_ik.name = "RenIK3D"
-	
-	ren_ik.armature_skeleton_path = skeleton.get_path()
-
+	#skeleton.add_child(ren_ik)
+	#ren_ik.skeleton = skeleton
+	#ren_ik.scene_file_path = skeleton.get_path()
+	'''
 	var armature_targets := Node3D.new()
 	armature_targets.name = "ArmatureTargets"
 	add_child(armature_targets)
@@ -208,6 +207,7 @@ func _setup_ik() -> Error:
 	
 	add_child(ren_ik)
 	ren_ik.live_preview = true
+	'''
 	return OK
 
 #-----------------------------------------------------------------------------#

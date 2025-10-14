@@ -34,7 +34,7 @@ const HelpMenu := {
 	LICENSES = "Licenses"
 }
 
-var _logger : Logger
+var _logger : AppLogger
 
 var context: Context = null
 

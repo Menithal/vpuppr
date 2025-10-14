@@ -5,7 +5,8 @@ extends DefaultGui
 #-----------------------------------------------------------------------------#
 
 func _ready() -> void:
-	_logger.set_name("VrmGui")
+	if _logger == null:
+		_logger = AppLogger::create("VrmGui")
 	
 	for i in [
 		[%Model, "res://screens/gui/model/vrm.tscn"],
