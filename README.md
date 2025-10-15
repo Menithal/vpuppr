@@ -22,8 +22,13 @@ General:
 			- [ ] GDMP on HOLD: Have not updated due to latest just outright crashing Godot 4.5.
 	- [x] Successfully Runs
 - [ ] bugs bugs bugs
-	- [ ] Buttons no worky
-	- [ ] VRM Model file selector does now show up for Linux.
+	- [x] Main Menu looks all wrong
+	- [x] VRM0 Avatars seem to be loaded wrong all twisted
+		- [ ] Caused by the Rust implementation of the vrm_puppet, the pose math is incorrect and only applies to specific bones.
+	- [ ] Refactor Runners -> Avatar and Avatar variants
+	- [ ] Avatar ("Runner") Management seems broken. Do not load models UNLESS they are being used, Rethink How is the listing of avatars done
+		- [ ] Method to delete listed avatars
+	
 
 
 # Modern State:

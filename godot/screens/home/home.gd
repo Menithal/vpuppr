@@ -325,7 +325,6 @@ func _adapt_screen_size() -> void:
 	_max_parallax_offset *= scale_factor
 	
 	for i in _parallax_elements:
-		i.size *= scale_factor
 		i.pivot_offset = i.size * 0.5
 		i.position = -i.pivot_offset
 		
@@ -358,6 +357,7 @@ func _run_from_data(data: RunnerData, runner_item: Control = null) -> void:
 	tween.tween_property(_fade, "color", Color.BLACK, START_RUNNER_TWEEN_TIME)
 	
 	await tween.finished
+	# Swapping scenes.
 	
 	st.root.add_child(context)
 	st.current_scene = context

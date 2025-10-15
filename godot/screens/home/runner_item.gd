@@ -16,6 +16,9 @@ var _preview: TextureRect = %Preview
 @onready
 var _favorite: Button = %Favorite
 @onready
+var _delete: Button = %Delete
+
+@onready
 var _title: Label = %Title
 @onready
 var _model: Label = %Model
@@ -58,12 +61,19 @@ func _ready() -> void:
 			_favorite.modulate = NOT_FAVORITE_COLOR
 	)
 	
+	_delete.pressed.connect(func() -> void:
+		# TODO: Delete does not work. Models are added INTO godot instead of listed anywhere specific. Should be done differently
+		print("Deleting RunnerItem")
+	)
+	
+	
 	mouse_entered.connect(func() -> void:
 		_panel.bg_color = HOVER_COLOR
 	)
 	mouse_exited.connect(func() -> void:
 		_panel.bg_color = NOT_HOVER_COLOR
 	)
+	
 
 func _to_string() -> String:
 	return JSON.stringify({

@@ -3,7 +3,7 @@
 .godot/
 godot/bin/*
 godot/export/*
-
+godot/screens/custom_sandbox/*
 # libvpuppr
 **/**/*.dll
 

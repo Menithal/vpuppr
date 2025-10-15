@@ -4,10 +4,11 @@ extends DefaultGui
 # Builtin functions
 #-----------------------------------------------------------------------------#
 
+func _init() -> void:
+	_logger = AppLogger::create("VrmGui")
+
+
 func _ready() -> void:
-	if _logger == null:
-		_logger = AppLogger::create("VrmGui")
-	
 	for i in [
 		[%Model, "res://screens/gui/model/vrm.tscn"],
 		[%Tracking, "res://screens/gui/tracking/tracking.tscn"],
