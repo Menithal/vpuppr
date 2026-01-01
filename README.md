@@ -1,3 +1,9 @@
+
+## Note this is now archived as there exists another Vtubing app done in Godot which pretty much does the same thing as this; while this was way out of date 
+
+See [SnekStudio](https://github.com/ExpiredPopsicle/SnekStudio) 
+
+
 # Vpuppr
 
 VTuber software made with Godot.
